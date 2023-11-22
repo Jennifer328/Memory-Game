@@ -19,13 +19,15 @@ function App() {
   const [turns, setTurns] = useState(0);
   const [choiceOne, setChoiceOne] = useState(null);
   const [choiceTwo, setChoiceTwo] = useState(null);
-  const [disabled, setDisabled] =useState(false);
+  const [disabled, setDisabled] =useState(false);  // make cards unclikable until the two cards clicked flipped back
 
   const shuffleCards = () =>{
     const shuffledCards = [...cardImages, ...cardImages]
-     .sort(() => Math.random() - 0.5) // positive swap,  negative stay as they are
-     .map((card) => ({...card, id: Math.random()})) // add an ID for each card object, ...card is for spread the card property.
-
+     .sort(() => Math.random() - 0.5) 
+     .map((card) => ({...card, id: Math.random()})) // add an ID for each card object.
+     
+    //  setChoiceOne(null);
+    //  setChoiceTwo(null); //not necessary
      setCards(shuffledCards);
      setTurns(0);
 
@@ -69,7 +71,14 @@ useEffect(() =>{
 }, [choiceOne, choiceTwo])
 
 
-  console.log(cards);
+//start a new game automatically
+useEffect(() =>{
+   shuffleCards();
+},[]);
+
+ 
+
+
 
   return (
     <div className="App">
@@ -87,6 +96,8 @@ useEffect(() =>{
         />
       ))}
     </div>
+
+    <p>Truns: {turns}</p>
       
     </div>
   );
